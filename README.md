@@ -18,6 +18,21 @@ This repository follows the course taught on [udemy](https://www.udemy.com/share
 
 It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
 
+Build command:
 
+```bash
+mvn package
+```
 
+Test command:
+
+```bash
+mvn test
+```
+
+Build without tests:
+
+```bash
+mvn package -Dmaven.test.skip=true
+```
 
