@@ -57,3 +57,16 @@ Example:
     }
 ```
 
+### Unit Test Naming Convention
+
+Below is a common pattern for naming tests:
+
+```
+test<System Under Test>_<Condition or State Change>_<Expected Result>
+```
+
+So the integerDivision() test that checks if 4 / 2 = 2 would be:
+
+```java
+testIntegerDivision_WhenFourIsDividedByTwo_ShouldReturnTwo() {}
+```
