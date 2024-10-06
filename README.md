@@ -36,3 +36,24 @@ Build without tests:
 mvn package -Dmaven.test.skip=true
 ```
 
+### Unit Test Messages
+
+Will always be evaluated even if the test passes.
+Best practice is to use a lambda function so they only get evaluated on a failure.
+This helps with performance in larger applications.
+
+Example:
+```java
+    @Test
+    void integerSubtraction() {
+        Calculator calculator = new Calculator();
+        int minuend = 33;
+        int subtrahend = 1;
+        int expectedResult = 32;
+
+        int actualResult = calculator.integerSubtraction(33,1);
+        assertEquals(expectedResult, actualResult,
+                () -> minuend + " - " + subtrahend + " did not produce " + expectedResult);
+    }
+```
+
