@@ -22,6 +22,6 @@ class CalculatorTest {
 
         int actualResult = calculator.integerSubtraction(33,1);
         assertEquals(expectedResult, actualResult,
-                minuend + " - " + subtrahend + " did not produce " + expectedResult);
+                () -> minuend + " - " + subtrahend + " did not produce " + expectedResult);
     }
 }
