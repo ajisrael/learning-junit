@@ -75,6 +75,17 @@ void test() {
 }
 ```
 
+### Lifecycle Annotations
+
+The following are the 4 lifecycle annotations provided by the JUnit Jupiter API
+
+```java
+@BeforeAll  // used for setup()
+@BeforeEach // used for beforeEach() instance of a test method
+@AfterEach  // used for afterEach() instance of a test method
+@AfterAll   // used for cleanup()
+```
+
 ### Maven Surefire Plugin
 
 It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
