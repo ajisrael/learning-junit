@@ -80,7 +80,7 @@ void test() {
 The following are the 4 lifecycle annotations provided by the JUnit Jupiter API
 
 ```java
-@BeforeAll  // used for setup()
+@BeforeAll  // used for setup() and must be static
 @BeforeEach // used for beforeEach() instance of a test method
 @AfterEach  // used for afterEach() instance of a test method
 @AfterAll   // used for cleanup()
