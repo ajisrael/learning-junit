@@ -63,6 +63,18 @@ void test() {
 }
 ```
 
+Another common way this pattern is described is with Given, When, Then:
+
+```java
+void test() {
+    // Given
+
+    // When
+
+    // Then
+}
+```
+
 ### Maven Surefire Plugin
 
 It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
