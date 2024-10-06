@@ -1,14 +1,13 @@
 package com.example;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Math operations in Calculator class")
 class CalculatorTest {
+
+    Calculator calculator;
 
     @BeforeAll
     static void setup() {
@@ -20,11 +19,22 @@ class CalculatorTest {
         System.out.println("Executing @AfterAll method.");
     }
 
+    @BeforeEach
+    void beforeEachTestMethod() {
+        calculator = new Calculator();
+        System.out.println("Executing @BeforeEach method.");
+    }
+
+    @AfterEach
+    void afterEachTestMethod() {
+        System.out.println("Executing @AfterEach method.");
+    }
+
     @DisplayName("Test 4/2 = 2")
     @Test
     void testIntegerDivision_WhenFourIsDividedByTwo_ShouldReturnTwo() {
+        System.out.println("Running Test 4/2 = 2");
         // Arrange
-        Calculator calculator = new Calculator();
         int dividend = 4;
         int divisor = 2;
         int expectedResult = 2;
@@ -39,13 +49,14 @@ class CalculatorTest {
     @DisplayName("Test division by zero")
     @Test
     void testIntegerDivision_WhenDividendIsDividedByZero_ShouldThrowArithmeticException() {
+        System.out.println("Running Test division by zero");
         fail("Not implemented yet");
     }
 
     @DisplayName("Test 33-1 = 32")
     @Test
     void integerSubtraction() {
-        Calculator calculator = new Calculator();
+        System.out.println("Running Test 33-1 = 32");
         int minuend = 33;
         int subtrahend = 1;
         int expectedResult = 32;
