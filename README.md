@@ -14,28 +14,6 @@ This repository follows the course taught on [udemy](https://www.udemy.com/share
 4. Self-validating
 5. Thorough & Timely - Covers edge cases
 
-### Maven Surefire Plugin
-
-It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
-
-Build command:
-
-```bash
-mvn package
-```
-
-Test command:
-
-```bash
-mvn test
-```
-
-Build without tests:
-
-```bash
-mvn package -Dmaven.test.skip=true
-```
-
 ### Unit Test Messages
 
 Will always be evaluated even if the test passes.
@@ -84,3 +62,26 @@ void test() {
     // Assert
 }
 ```
+
+### Maven Surefire Plugin
+
+It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
+
+Build command:
+
+```bash
+mvn package
+```
+
+Test command:
+
+```bash
+mvn test
+```
+
+Build without tests:
+
+```bash
+mvn package -Dmaven.test.skip=true
+```
+
