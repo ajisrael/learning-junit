@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void integerDivision() {
+    void testIntegerDivision_WhenFourIsDividedByTwo_ShouldReturnTwo() {
         Calculator calculator = new Calculator();
         int result = calculator.integerDivision(4,2);
         assertEquals(2, result, "4/2 dot not produce 2");
