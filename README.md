@@ -83,7 +83,15 @@ The following are the 4 lifecycle annotations provided by the JUnit Jupiter API
 @BeforeAll  // used for setup() and must be static
 @BeforeEach // used for beforeEach() instance of a test method
 @AfterEach  // used for afterEach() instance of a test method
-@AfterAll   // used for cleanup()
+@AfterAll   // used for cleanup() and must be static
+```
+
+### @Disabled Annotation:
+
+Allows you to disable a unit test with a description and still keep it in the report:
+
+```java
+@Disabled("TODO: Still needs work")
 ```
 
 ### Maven Surefire Plugin
