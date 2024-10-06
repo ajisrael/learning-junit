@@ -70,3 +70,17 @@ So the integerDivision() test that checks if 4 / 2 = 2 would be:
 ```java
 testIntegerDivision_WhenFourIsDividedByTwo_ShouldReturnTwo() {}
 ```
+
+### Test Method Code Structure: AAA
+
+A good practice is to arrange your test methods like the following:
+
+```java
+void test() {
+    // Arrange
+
+    // Act
+
+    // Assert
+}
+```
