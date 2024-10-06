@@ -1,5 +1,7 @@
 package com.example;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Math operations in Calculator class")
 class CalculatorTest {
+
+    @BeforeAll
+    static void setup() {
+        System.out.println("Executing @BeforeAll method.");
+    }
+
+    @AfterAll
+    static void cleanup() {
+        System.out.println("Executing @AfterAll method.");
+    }
 
     @DisplayName("Test 4/2 = 2")
     @Test
