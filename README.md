@@ -183,6 +183,28 @@ public class MethodOrderedByNameTest {
 }
 ```
 
+### Run Tests by Index
+
+Allows you to run tests in order by index:
+
+```java
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class MethodOrderedByOrderIndexTest {
+
+    @Order(1)
+    @Test
+    void testB() {
+        System.out.println("Running test B");
+    }
+
+    @Order(2)
+    @Test
+    void testA() {
+        System.out.println("Running test A");
+    }
+}
+```
+
 ## Other
 
 ### Set Test Resources Root
