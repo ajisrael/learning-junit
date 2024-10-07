@@ -205,6 +205,14 @@ public class MethodOrderedByOrderIndexTest {
 }
 ```
 
+### Run Test Classes in Order by Index
+
+You can configure ordering similarly for classes using a `junit-platform.properties` file.
+
+```properties
+junit.jupiter.testclass.order.default=org.junit.jupiter.api.ClassOrderer$OrderAnnotation
+```
+
 ## Other
 
 ### Set Test Resources Root
@@ -215,6 +223,16 @@ Then right click at the base of the project in IntelliJ and select `Open Module 
 ![Module Settings Window](./images/test-resources-menu.png)
 
 Select the `resources` package you created and then click the Test Resources button at the top and click apply.
+
+### Create JUnit Properties
+
+First make sure you've created and configured your `resources` package.
+Then right click the package and select `Resource Bundle` as shown below:
+
+![Select Resource Bundle](./images/select-resources-bundle.png)
+
+Then enter 'junit-platform' as the resource bundle base name:
+![Fill Out Resource Bundle](./images/complete-resource-bundle-form.png)
 
 ### Maven Surefire Plugin
 
