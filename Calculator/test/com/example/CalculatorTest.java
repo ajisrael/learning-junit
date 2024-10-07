@@ -74,7 +74,7 @@ class CalculatorTest {
 
     @DisplayName("Test integer subtraction [minuend, subtrahend, expectedResult]")
     @ParameterizedTest
-    @MethodSource("integerSubtractionInputParameters")
+    @MethodSource
     void integerSubtraction(int minuend, int subtrahend, int expectedResult) {
         System.out.println("Running Test " + minuend + " - " + subtrahend + " = " + expectedResult);
 
@@ -83,7 +83,7 @@ class CalculatorTest {
                 () -> minuend + " - " + subtrahend + " did not produce " + expectedResult);
     }
 
-    private static Stream<Arguments> integerSubtractionInputParameters() {
+    private static Stream<Arguments> integerSubtraction() {
 
         return Stream.of(
                 Arguments.of(33, 1, 32),
