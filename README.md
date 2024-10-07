@@ -4,7 +4,7 @@
 
 This repository follows the course taught on [udemy](https://www.udemy.com/share/106yPY3@NCV-swCvDAd_lj7XoibM31mHnJfE6C9N3At-HdtpDA09JBahVWFW8AKOUm6NasPrSw==/)
 
-## Notes
+## JUnit Notes
 
 ### F.I.R.S.T. Principle
 
@@ -93,6 +93,33 @@ Allows you to disable a unit test with a description and still keep it in the re
 ```java
 @Disabled("TODO: Still needs work")
 ```
+
+### @ParameterizedTest
+
+This annotation is used to indicate that the test accepts parameters.
+
+#### @MethodSource
+
+An additional annotation `@MethodSource` is used to specify which method will return the list of arguments to be passed as parameters.
+The method referenced by `@MethodSource` must be `static`.
+
+If the name of the method referenced by `@MethodSource` is the same as a test method name, we do not need to specify it in the annotation.
+
+#### @CSVSource
+
+A comma separated list of values to be passed as arguments to the method.
+
+`''` will denote an empty string and `` nothing indicates a null value
+
+```java
+@CSVSource({
+    "apple,orange", // passes "apple" and "orange" as strings
+    "apple,''",     // passes "apple" and "" as a string and empty string
+    "apple,"        // passes "apple" and null as string and null
+})
+```
+
+## Other
 
 ### Maven Surefire Plugin
 
