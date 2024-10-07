@@ -121,6 +121,15 @@ A comma separated list of values to be passed as arguments to the method.
 
 ## Other
 
+### Set Test Resources Root
+
+First create a `resources` package inside your `test` folder.
+Then right click at the base of the project in IntelliJ and select `Open Module Settings`. You should then see an screen like the following:
+
+![Module Settings Window](./images/test-resources-root.png)
+
+Select the `resources` package you created and then click the Test Resources button at the top and click apply.
+
 ### Maven Surefire Plugin
 
 It appears that the surefire plugin is part of the JUnit Aggregator dependency, but it is not the latest version of the plugin
