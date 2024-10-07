@@ -119,6 +119,60 @@ A comma separated list of values to be passed as arguments to the method.
 })
 ```
 
+#### @CSVFileSource
+
+Allows you to specify a file with parameters to run multiple iterations of a test method.
+The path is based at the root of the test resources directory.
+
+```java
+@CSVFileSource("/paramaters.csv")
+```
+
+#### @ValueSource
+
+Can only be used for testing a method with a single parameter. Allows you to pass a list of arguments into your test method.
+
+```java
+@ParameterizedTest
+@ValueSource(strings = {"John", "Kate", "Alice"})
+void valueSourceDemonstration(String firstName) {
+    System.out.println(firstName);
+    assertNotNull(firstName);
+}
+```
+
+### @RepeatedTest
+
+Allows you to test a method multiple times. JUnit also provides some objects that you can inject into the method that can tell you what 
+iteration you're on and some metadata for the current test.
+
+```java
+@DisplayName("Test division by zero")
+@RepeatedTest(value=3, name="{displayName}: Repetition {currentRepetition} of " +
+    "{totalRepetitions}")
+void testIntegerDivision_WhenDividendIsDividedByZero_ShouldThrowArithmeticException(
+        RepetitionInfo repetitionInfo,
+        TestInfo testInfo
+) {
+    System.out.println("Running " + testInfo.getTestMethod().get().getName());
+    System.out.println("Repetition #" + repetitionInfo.getCurrentRepetition() +
+            " of " + repetitionInfo.getTotalRepetitions());
+
+    // Rest of test ...
+
+}
+```
+
+### Run Tests in a Random Order
+
+Allows you to run test in a random order:
+
+```java
+@TestMethodOrder(MethodOrderer.Random.class)
+public class MethodOrderedRandomlyTest {
+}
+```
+
 ## Other
 
 ### Set Test Resources Root
