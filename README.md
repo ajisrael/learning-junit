@@ -173,6 +173,16 @@ public class MethodOrderedRandomlyTest {
 }
 ```
 
+### Run Tests by Name
+
+Allows you to run tests in order by name:
+
+```java
+@TestMethodOrder(MethodOrderer.MethodName.class)
+public class MethodOrderedByNameTest {
+}
+```
+
 ## Other
 
 ### Set Test Resources Root
