@@ -213,6 +213,15 @@ You can configure ordering similarly for classes using a `junit-platform.propert
 junit.jupiter.testclass.order.default=org.junit.jupiter.api.ClassOrderer$OrderAnnotation
 ```
 
+### Changing Test Instance Lifecycle
+
+By default when testing a new instance of the test class is instantiated for each test method. This keeps tests isolated.
+We can change this to allow the sharing of state within the test class with the following annotation:
+
+```java
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+```
+
 ## Other
 
 ### Set Test Resources Root
