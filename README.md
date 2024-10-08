@@ -222,6 +222,8 @@ We can change this to allow the sharing of state within the test class with the 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 ```
 
+When you change the Test Instance Lifecycle to per class, then methods annotated with `@BeforeAll` and `@AfterAll` are no longer `static`.
+
 ## Other
 
 ### Set Test Resources Root
