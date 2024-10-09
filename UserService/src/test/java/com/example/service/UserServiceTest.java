@@ -24,6 +24,8 @@ public class UserServiceTest {
 
     @Mock
     UsersRepository usersRepository;
+    @Mock
+    EmailVerificationService emailVerificationService;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -57,6 +59,23 @@ public class UserServiceTest {
         assertEquals(firstName, user.getFirstName(), "User's first name is incorrect");
         assertEquals(lastName, user.getLastName(), "User's last name is incorrect");
         assertEquals(email, user.getEmail(), "User's email is incorrect");
+        verify(usersRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    @DisplayName("User Object Creation Failed")
+    void testCreateUser_whenSavingUserToRepositoryFails_thenThrowsUserServiceException() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(false);
+
+        // Act & Assert
+        UserServiceException exception = assertThrows(UserServiceException.class, () -> {
+            User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
+        }, "User service should throw UserServiceException when repository throws exception");
+
+        // Assert
+        assertEquals(CANNOT_CREATE_USER, exception.getLocalizedMessage(),
+                "Message from User Service Exception is incorrect");
         verify(usersRepository, times(1)).save(any(User.class));
     }
 
@@ -103,8 +122,26 @@ public class UserServiceTest {
             User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
         }, "User service should throw UserServiceException when repository throws exception");
 
+        //Assert
+        verify(usersRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    @DisplayName("Throw UserServiceException when scheduleEmailConfirmation() throws RuntimeException")
+    void testCreateUser_whenEmailNotificationExceptionThrown_throwsUserServiceException() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(true);
+
+        doThrow(EmailNotificationServiceException.class)
+                .when(emailVerificationService)
+                .scheduleEmailConfirmation(any(User.class));
+
+        // Act & Assert
+        UserServiceException exception = assertThrows(UserServiceException.class, () -> {
+            User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
+        }, "User service should throw UserServiceException when emailVerificationService throws exception");
+
         // Assert
-        assertEquals(CANNOT_CREATE_USER, exception.getLocalizedMessage(),
-                "Message from User Service Exception is incorrect");
+        verify(emailVerificationService, times(1)).scheduleEmailConfirmation(any(User.class));
     }
 }

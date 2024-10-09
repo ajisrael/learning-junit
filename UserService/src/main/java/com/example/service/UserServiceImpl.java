@@ -12,9 +12,11 @@ import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
 public class UserServiceImpl implements UserService {
 
     private UsersRepository usersRepository;
+    private EmailVerificationService emailVerificationService;
 
-    public UserServiceImpl(UsersRepository usersRepository) {
+    public UserServiceImpl(UsersRepository usersRepository, EmailVerificationService emailVerificationService) {
         this.usersRepository = usersRepository;
+        this.emailVerificationService = emailVerificationService;
     }
 
     @Override
@@ -38,11 +40,17 @@ public class UserServiceImpl implements UserService {
 
         try {
             isUserCreated = usersRepository.save(user);
-        } catch (RuntimeException e) {
-            throw new UserServiceException(CANNOT_CREATE_USER);
+        } catch (RuntimeException ex) {
+            throw new UserServiceException(ex.getMessage());
         }
 
         if (!isUserCreated) throw new UserServiceException(CANNOT_CREATE_USER);
+
+        try {
+            emailVerificationService.scheduleEmailConfirmation(user);
+        } catch (RuntimeException ex) {
+            throw new UserServiceException(ex.getMessage());
+        }
 
         return user;
     }
