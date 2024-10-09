@@ -49,6 +49,7 @@ public class UserServiceTest {
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
         // Arrange
         when(usersRepository.save(any(User.class))).thenReturn(true);
+        doNothing().when(emailVerificationService).scheduleEmailConfirmation(any(User.class));
 
         // Act
         User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
@@ -60,6 +61,7 @@ public class UserServiceTest {
         assertEquals(lastName, user.getLastName(), "User's last name is incorrect");
         assertEquals(email, user.getEmail(), "User's email is incorrect");
         verify(usersRepository, times(1)).save(any(User.class));
+        verify(emailVerificationService, times(1)).scheduleEmailConfirmation(any(User.class));
     }
 
     @Test
