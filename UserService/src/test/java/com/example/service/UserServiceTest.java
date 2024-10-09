@@ -16,6 +16,7 @@ import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -44,7 +45,7 @@ public class UserServiceTest {
     @DisplayName("User Object Created")
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
         // Arrange
-        Mockito.when(usersRepository.save(Mockito.any(User.class))).thenReturn(true);
+        when(usersRepository.save(any(User.class))).thenReturn(true);
 
         // Act
         User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
@@ -55,7 +56,7 @@ public class UserServiceTest {
         assertEquals(firstName, user.getFirstName(), "User's first name is incorrect");
         assertEquals(lastName, user.getLastName(), "User's last name is incorrect");
         assertEquals(email, user.getEmail(), "User's email is incorrect");
-        Mockito.verify(usersRepository, Mockito.times(1)).save(Mockito.any(User.class));
+        verify(usersRepository, times(1)).save(any(User.class));
     }
 
     @Test
