@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.data.UsersRepository;
 import com.example.model.User;
 
 import java.util.UUID;
@@ -8,6 +9,13 @@ import static com.example.constants.ExceptionMessages.FIRST_NAME_IS_EMPTY;
 import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
 
 public class UserServiceImpl implements UserService {
+
+    private UsersRepository usersRepository;
+
+    public UserServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+
     @Override
     public User createUser(String firstName,
                            String lastName,
@@ -23,6 +31,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException(LAST_NAME_IS_EMPTY);
         }
 
-        return new User(UUID.randomUUID().toString(), firstName, lastName, email);
+        User user = new User(UUID.randomUUID().toString(), firstName, lastName, email);
+
+        usersRepository.save(user);
+
+        return user;
     }
 }
