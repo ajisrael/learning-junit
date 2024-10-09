@@ -258,6 +258,28 @@ Mockito provides us with the ability to inject mocks into our class that we are 
 UserServiceImpl userService;
 ```
 
+### Stubbing a method
+
+You can stub methods that return an object or value with the `when().thenReturn()` pattern.
+
+```java
+when(usersRepository.save(any(User.class))).thenReturn(true);
+```
+
+You can stub methods to throw an exception with the `when().thenThrow()` pattern.
+
+```java
+when(usersRepository.save(any(User.class))).thenThrow(RuntimeException.class);
+```
+
+You can stub void methods to throw an exception with the `doThrow().when()` pattern.
+
+```java
+doThrow(EmailNotificationServiceException.class)
+        .when(emailVerificationService)
+        .scheduleEmailConfirmation(any(User.class));
+```
+
 ## Other
 
 ### TDD Flow
