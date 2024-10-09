@@ -308,6 +308,10 @@ To generate a coverage test report in IntelliJ, simply right click on the test a
 
 ![Test Report Image](./images/test-report.png)
 
+You can then export the results using the icon shown below:
+
+![Export Test Report Icon](./images/export-test-report.png)
+
 ### TDD Flow
 
 The process for test driven development is as follows:
