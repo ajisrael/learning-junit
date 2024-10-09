@@ -272,6 +272,12 @@ You can stub methods to throw an exception with the `when().thenThrow()` pattern
 when(usersRepository.save(any(User.class))).thenThrow(RuntimeException.class);
 ```
 
+You can stub void methods to do nothing (happy path) with the `doNothing().when()` pattern.
+
+```java
+doNothing().when(emailVerificationService).scheduleEmailConfirmation(any(User.class));
+```
+
 You can stub void methods to throw an exception with the `doThrow().when()` pattern.
 
 ```java
