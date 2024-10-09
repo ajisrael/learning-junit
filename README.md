@@ -312,6 +312,96 @@ You can then export the results using the icon shown below:
 
 ![Export Test Report Icon](./images/export-test-report.png)
 
+### Generating Test Report with Maven
+
+You can also have a test report generated with maven using the `maven surefire report plugin` found [here](https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-report-plugin)
+
+```xml
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M6</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
+
+This will allow the report to be generated if all unit tests pass. To allow report to be generated if a test fails we need to adjust the `maven-surefire-plugin` as well.
+
+```xml
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M6</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+```
+
+Now you will be able to generate a report when running the following command:
+
+```bash
+mvn clean test
+```
+
+The generated report can be found opened using the following command from the base of the project:
+
+```bash
+open ./target/site/surefire-report.html
+```
+
+To make the report a little nicer we can use the following command:
+
+```bash
+mvn site -DgenerateReport=false
+```
+
+### Generating Code Coverage Report with Maven
+
+You can generate a code coverage report with maven using the [Jacoco Maven Plugin](https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin)
+
+```xml
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
+
+Generate report with command:
+
+```bash
+mvn clean test
+```
+
+Open report:
+
+```bash
+open ./target/site/jacoco/index.html
+```
+
 ### TDD Flow
 
 The process for test driven development is as follows:
