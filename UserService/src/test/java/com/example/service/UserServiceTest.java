@@ -1,9 +1,15 @@
 package com.example.service;
 
+import com.example.data.UsersRepository;
 import com.example.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.example.constants.ExceptionMessages.FIRST_NAME_IS_EMPTY;
 import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
@@ -11,9 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    UserService userService;
+    @Mock
+    UsersRepository usersRepository;
+
+    @InjectMocks
+    UserServiceImpl userService;
     String firstName;
     String lastName;
     String email;
@@ -22,7 +33,6 @@ public class UserServiceTest {
 
     @BeforeEach
     void init() {
-        userService = new UserServiceImpl();
         firstName = "Sergey";
         lastName = "Kargopolov";
         email = "test@test.com";
@@ -33,6 +43,9 @@ public class UserServiceTest {
     @Test
     @DisplayName("User Object Created")
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
+        // Arrange
+        Mockito.when(usersRepository.save(Mockito.any(User.class))).thenReturn(true);
+
         // Act
         User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
 
@@ -42,6 +55,7 @@ public class UserServiceTest {
         assertEquals(firstName, user.getFirstName(), "User's first name is incorrect");
         assertEquals(lastName, user.getLastName(), "User's last name is incorrect");
         assertEquals(email, user.getEmail(), "User's email is incorrect");
+        Mockito.verify(usersRepository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 
     @Test
