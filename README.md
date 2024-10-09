@@ -224,6 +224,40 @@ We can change this to allow the sharing of state within the test class with the 
 
 When you change the Test Instance Lifecycle to per class, then methods annotated with `@BeforeAll` and `@AfterAll` are no longer `static`.
 
+## Mockito
+
+Example implementation can be found in the [UserServiceTest](./UserService/src/test/java/com/example/service/UserServiceTest.java) class.
+
+### Setup
+
+Add maven or gradle dependency or download jars directly from maven repository after searching for `mockito junit jupiter`.
+
+### Adding Mockito to a Test Class
+
+To add mockito to a test class, we need to annotate the class with the following annotation:
+
+```java
+@ExtendWith(MockitoExtension.class)
+```
+
+### Mocking a Dependency
+
+To mock an object that is a dependency of the class we are trying to test we need to add the `@Mock` annotation:
+
+```java
+@Mock
+UsersRepository usersRepository;
+```
+
+### Injecting a Mock
+
+Mockito provides us with the ability to inject mocks into our class that we are testing with the `@InjectMocks` annotation:
+
+```java
+@InjectMocks
+UserServiceImpl userService;
+```
+
 ## Other
 
 ### TDD Flow
