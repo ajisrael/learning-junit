@@ -286,6 +286,20 @@ doThrow(EmailNotificationServiceException.class)
         .scheduleEmailConfirmation(any(User.class));
 ```
 
+### Calling a real method
+
+There may be times where you really do want to call the method of a class that you are mocking.
+You can do this with the `doCallRealMethod().when()` pattern.
+
+```java
+doCallRealMethod().when(emailVerificationService)
+        .scheduleEmailConfirmation(any(User.class));
+```
+
+NOTE:
+This can only be done on a non abstract method.
+AKA you cannot be mocking an interface, you need to be mocking an implementation of the interface.
+
 ## Other
 
 ### TDD Flow
