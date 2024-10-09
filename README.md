@@ -226,6 +226,22 @@ When you change the Test Instance Lifecycle to per class, then methods annotated
 
 ## Other
 
+### TDD Flow
+
+The process for test driven development is as follows:
+
+1. Write Test unti it doesn't compile
+
+    1a. Write application code until test compiles
+
+2. Run test (should be red)
+
+3. Update application code and run test until it passes
+
+4. Refactor tests and application code
+
+5. Repeat till application is done
+
 ### Set Test Resources Root
 
 First create a `resources` package inside your `test` folder.
