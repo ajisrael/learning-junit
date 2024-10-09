@@ -25,7 +25,7 @@ public class UserServiceTest {
     @Mock
     UsersRepository usersRepository;
     @Mock
-    EmailVerificationService emailVerificationService;
+    EmailVerificationServiceImpl emailVerificationService;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -145,5 +145,22 @@ public class UserServiceTest {
 
         // Assert
         verify(emailVerificationService, times(1)).scheduleEmailConfirmation(any(User.class));
+    }
+
+    @Test
+    @DisplayName("Schedule Email Confirmation is executed")
+    void testCreateUser_whenUserCreated_schedulesEmailConfirmation() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(true);
+
+        doCallRealMethod().when(emailVerificationService)
+                .scheduleEmailConfirmation(any(User.class));
+
+        // Act
+        userService.createUser(firstName, lastName, email, password, repeatPassword);
+
+        // Assert
+        verify(emailVerificationService, times(1))
+                .scheduleEmailConfirmation(any(User.class));
     }
 }
