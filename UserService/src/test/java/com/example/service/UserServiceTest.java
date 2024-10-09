@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.example.constants.ExceptionMessages.CANNOT_CREATE_USER;
 import static com.example.constants.ExceptionMessages.FIRST_NAME_IS_EMPTY;
 import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,7 +82,7 @@ public class UserServiceTest {
         // Arrange
         String lastName = "";
 
-        // Act && Assert
+        // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
         }, "Empty last name should have caused an Illegal Argument Exception");
@@ -89,5 +90,21 @@ public class UserServiceTest {
         // Assert
         assertEquals(LAST_NAME_IS_EMPTY, exception.getLocalizedMessage(),
                 "Message from Illegal Argument Exception is incorrect");
+    }
+
+    @Test
+    @DisplayName("Throw UserServiceException when save() throws RuntimeException")
+    void testCreateUser_whenSaveMethodThrowsException_thenThrowsUserServiceException() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenThrow(RuntimeException.class);
+
+        // Act & Assert
+        UserServiceException exception = assertThrows(UserServiceException.class, () -> {
+            User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
+        }, "User service should throw UserServiceException when repository throws exception");
+
+        // Assert
+        assertEquals(CANNOT_CREATE_USER, exception.getLocalizedMessage(),
+                "Message from User Service Exception is incorrect");
     }
 }

@@ -5,6 +5,7 @@ import com.example.model.User;
 
 import java.util.UUID;
 
+import static com.example.constants.ExceptionMessages.CANNOT_CREATE_USER;
 import static com.example.constants.ExceptionMessages.FIRST_NAME_IS_EMPTY;
 import static com.example.constants.ExceptionMessages.LAST_NAME_IS_EMPTY;
 
@@ -33,9 +34,15 @@ public class UserServiceImpl implements UserService {
 
         User user = new User(UUID.randomUUID().toString(), firstName, lastName, email);
 
-        boolean isUserCreated = usersRepository.save(user);
+        boolean isUserCreated;
 
-        if (!isUserCreated) throw new UserServiceException("Could not create user");
+        try {
+            isUserCreated = usersRepository.save(user);
+        } catch (RuntimeException e) {
+            throw new UserServiceException(CANNOT_CREATE_USER);
+        }
+
+        if (!isUserCreated) throw new UserServiceException(CANNOT_CREATE_USER);
 
         return user;
     }
