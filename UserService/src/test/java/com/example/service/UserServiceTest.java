@@ -1,7 +1,7 @@
 package com.example.service;
 
 import com.example.model.User;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,17 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserServiceTest {
 
+    UserService userService;
+    String firstName;
+    String lastName;
+    String email;
+    String password;
+    String repeatPassword;
+
+    @BeforeEach
+    void init() {
+        userService = new UserServiceImpl();
+        firstName = "Sergey";
+        lastName = "Kargopolov";
+        email = "test@test.com";
+        password = "12345678";
+        repeatPassword = "12345678";
+    }
+
     @Test
     @DisplayName("User Object Created")
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
-        // Arrange
-        UserService userService = new UserServiceImpl();
-        String firstName = "Sergey";
-        String lastName = "Kargopolov";
-        String email = "test@test.com";
-        String password = "12345678";
-        String repeatPassword = "12345678";
-
         // Act
         User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
 
@@ -38,14 +47,7 @@ public class UserServiceTest {
     @DisplayName("Empty first name causes correct exception")
     void testCreateUser_whenFirstNameIsEmpty_throwsIllegalArgumentException() {
         // Arrange
-        UserService userService = new UserServiceImpl();
         String firstName = "";
-        String lastName = "Kargopolov";
-        String email = "test@test.com";
-        String password = "12345678";
-        String repeatPassword = "12345678";
-
-        String expectedExceptionMessage = FIRST_NAME_IS_EMPTY;
 
         // Act && Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -53,7 +55,7 @@ public class UserServiceTest {
         }, "Empty first name should have caused an Illegal Argument Exception");
 
         // Assert
-        assertEquals(expectedExceptionMessage, exception.getLocalizedMessage(),
+        assertEquals(FIRST_NAME_IS_EMPTY, exception.getLocalizedMessage(),
                 "Message from Illegal Argument Exception is incorrect");
     }
 }
