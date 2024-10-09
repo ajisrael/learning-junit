@@ -306,6 +306,8 @@ AKA you cannot be mocking an interface, you need to be mocking an implementation
 
 To generate a coverage test report in IntelliJ, simply right click on the test and click run tests with coverage report or look for the Shield and play icon.
 
+![Test Report Image](./images/test-report.png)
+
 ### TDD Flow
 
 The process for test driven development is as follows:
