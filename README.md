@@ -328,6 +328,38 @@ To disable filters we need to use the following annotation:
 @AutoConfigureMockMvc(addFilters = false)
 ```
 
+We can also modify the `@WebMvcTest` annotation instead:
+
+```java
+@WebMvcTest(controllers = UsersController.class,
+excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+```
+
+### @MockBean annotation
+
+Creates a mock object for the class that implements the interface
+
+```java
+@MockBean
+UsersService usersService;
+```
+
+If there are multiple classes that implement the interface then you will need to be specific about which one to mock.
+To do this, you should set the config at the class level of all classes that it needs to mock and then autowire the interface that needs to be mocked.
+
+```java
+@MockBean({UsersServiceImpl.class})
+public class UsersControllerWebLayerTest {
+
+    @Autowired
+    UsersService usersService;
+
+    // Rest of test
+}
+```
+
+This is very similar to the `@Mock` annotation from Mokito, but also adds the object to the spring application context.
+
 ## Other
 
 ### Generating Coverage Test Report
