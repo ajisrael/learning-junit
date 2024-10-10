@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -57,10 +58,7 @@ public class UsersControllerWebLayerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(userDetailsRequestModel));
 
-        UserDto userDto = new UserDto();
-        userDto.setFirstName("Sergey");
-        userDto.setLastName("Kargopolov");
-        userDto.setEmail("test@test.com");
+        UserDto userDto = new ModelMapper().map(userDetailsRequestModel, UserDto.class);
         userDto.setUserId(UUID.randomUUID().toString());
 
         when(usersService.createUser(any(UserDto.class))).thenReturn(userDto);
