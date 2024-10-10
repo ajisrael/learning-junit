@@ -308,6 +308,26 @@ All that is required is the `Spring Boot Starter Test` package that can be found
 
 If we are using `Spring Security` (link to mvn package [here](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)) then we will also need this test package [spring-security-test](https://mvnrepository.com/artifact/org.springframework.security/spring-security-test)
 
+### @WebMvcTest
+
+This annotation tells spring boot to only load into the application context beans for the web layer.
+
+You can further limit what classes get loaded using the following property:
+
+```java
+@WebMvcTest(controllers = UsersController.class)
+```
+
+Here we are specifically only testing the `UserController` class, so we limit the application context to only this class.
+
+### Disable Spring Security Filters for Test
+
+To disable filters we need to use the following annotation:
+
+```java
+@AutoConfigureMockMvc(addFilters = false)
+```
+
 ## Other
 
 ### Generating Coverage Test Report
