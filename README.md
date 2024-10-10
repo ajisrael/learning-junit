@@ -300,6 +300,14 @@ NOTE:
 This can only be done on a non abstract method.
 AKA you cannot be mocking an interface, you need to be mocking an implementation of the interface.
 
+## Testing With Spring
+
+### Project Setup
+
+All that is required is the `Spring Boot Starter Test` package that can be found [here](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test) but comes OOTB from a Spring Initializr project. THis package contains libraries like JUnit, Mockito, etc. Everything we need for testing in Spring.
+
+If we are using `Spring Security` (link to mvn package [here](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)) then we will also need this test package [spring-security-test](https://mvnrepository.com/artifact/org.springframework.security/spring-security-test)
+
 ## Other
 
 ### Generating Coverage Test Report
