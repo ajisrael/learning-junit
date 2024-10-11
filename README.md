@@ -363,8 +363,11 @@ This is very similar to the `@Mock` annotation from Mokito, but also adds the ob
 ### @SpringBootTest Annotation
 
 This annotation will load the entire application context of the spring boot app. This should be used for integration testing.
-By default `@SpringBootTest` will create a mocked web environment (meaning it won't actually load everything). To use a real web server we need to update the
-properties of the annotation to look like the following:
+By default `@SpringBootTest` will create a mocked web environment (meaning it won't actually load everything).
+
+#### Defined Port
+
+To use a real web server we need to update the properties of the annotation to look like the following:
 
 ```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -386,6 +389,23 @@ If you needed to overwrite more than one property, your annotation will need to 
 properties = {"server.port=8081","other.property=someValue"})
 ```
 
+#### Random Port (Best Practice)
+
+In general it is best to have tests run on a random port as this prevents conflicts and allows multiple tests to run in parallel.
+There is no need to configure ports for this in the annotation or configuration files.
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+```
+
+Behind the scenes this will change the `server.port` property to be zero:
+
+```properties
+server.port=0
+```
+
+This configuration will tell spring boot to start on a random port number
+
 ### @TestPropertySource Annotation
 
 This annotation is to be used as another way of specifying properties for the spring boot test application. It allows you to specify a completely different
@@ -405,6 +425,8 @@ As seen before in the `@SpringBootTest` we can also overwrite any of thes proper
 ```
 
 This will take the highest priority.
+
+
 
 ## Other
 
