@@ -363,6 +363,48 @@ This is very similar to the `@Mock` annotation from Mokito, but also adds the ob
 ### @SpringBootTest Annotation
 
 This annotation will load the entire application context of the spring boot app. This should be used for integration testing.
+By default `@SpringBootTest` will create a mocked web environment (meaning it won't actually load everything). To use a real web server we need to update the
+properties of the annotation to look like the following:
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+```
+
+This will use the defined port in the `application.properties` file inside the project's `resources` folder.
+
+You can also overwrite the property of the server port inside the annotation:
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+properties = "server.port=8081")
+```
+
+If you needed to overwrite more than one property, your annotation will need to follow the following syntax:
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+properties = {"server.port=8081","other.property=someValue"})
+```
+
+### @TestPropertySource Annotation
+
+This annotation is to be used as another way of specifying properties for the spring boot test application. It allows you to specify a completely different
+properties file for any specific environment changes required for testing.
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestPropertySource(locations = "/application-test.properties")
+```
+
+As seen before in the `@SpringBootTest` we can also overwrite any of thes properties inside this annotation as well.
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestPropertySource(locations = "/application-test.properties",
+    properties = "server.port=8081")
+```
+
+This will take the highest priority.
 
 ## Other
 
