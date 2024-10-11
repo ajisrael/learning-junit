@@ -360,6 +360,10 @@ public class UsersControllerWebLayerTest {
 
 This is very similar to the `@Mock` annotation from Mokito, but also adds the object to the spring application context.
 
+### @SpringBootTest Annotation
+
+This annotation will load the entire application context of the spring boot app. This should be used for integration testing.
+
 ## Other
 
 ### Generating Coverage Test Report
