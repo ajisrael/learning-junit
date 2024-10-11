@@ -565,3 +565,11 @@ Build without tests:
 mvn package -Dmaven.test.skip=true
 ```
 
+### @Value Annotation
+
+This allows you to inject the value of a configuration property to a variable in a class inside a spring boot app.
+
+```java
+    @Value("${server.port}")
+    private int serverPort;
+```
