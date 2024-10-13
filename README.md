@@ -436,6 +436,15 @@ This is why it is used in integration tests, easier authentication, as shown bel
     private TestRestTemplate testRestTemplate;
 ```
 
+### JPA Testing
+
+#### @DataJpaTest Annotation
+
+This annotation allows us to test our data layer in isolation.
+It will only load the application context with JPA related components.
+By default each test method is treated as transactional and will rollback when complete.
+Also an in memory database is used by default, so no additional configuration is required.
+
 ## Other
 
 ### Generating Coverage Test Report
