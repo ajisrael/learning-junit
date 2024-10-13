@@ -630,3 +630,41 @@ userDetailsRequestJson.put("email", "test@test.com");
 userDetailsRequestJson.put("password", "12345678");
 userDetailsRequestJson.put("repeatPassword", "12345678");
 ```
+
+### Setting HTTP Headers
+
+We can instantiate an HTTP Header object with the following:
+
+```java
+HttpHeaders headers = new HttpHeaders();
+```
+
+Then there are two ways to set values for headers:
+
+You can set any key value pair for a header like this:
+
+```java
+headers.set("Accept", "application/json");
+```
+
+Or if it is a commonly used header (like `Accept`),
+then there is most likely a specifc method for setting that header:
+
+```java
+headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+```
+
+Note: For `Accept` and `ContentType` we have access to the `MediaType` constants.
+
+### Adding Headers (and Body) to a request with HttpEntity
+
+The `HttpEntity` class has two constructors.
+
+```java
+HttpEntity<String> request = new HttpEntity<>(body, headers);
+HttpEntity<String> request = new HttpEntity<>(headers);
+```
+
+So when there is a body present (ex, POST request) you will need to use the first one,
+and when there is not a body present (ex. GET request) you can use the second or set the
+body to `null` in the first example.
