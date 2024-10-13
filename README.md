@@ -426,7 +426,15 @@ As seen before in the `@SpringBootTest` we can also overwrite any of thes proper
 
 This will take the highest priority.
 
+### TestRestTemplate vs. RestTemplate
 
+Both are http clients but `TestRestTemplate` is easier to use in testing and doesn't fully extend a `RestTemplate`.
+This is why it is used in integration tests, easier authentication, as shown below:
+
+```java
+    @Autowired
+    private TestRestTemplate testRestTemplate;
+```
 
 ## Other
 
@@ -594,4 +602,31 @@ This allows you to inject the value of a configuration property to a variable in
 ```java
     @Value("${server.port}")
     private int serverPort;
+```
+
+### Creating JSON Formatted Strings
+
+There are two ways to create a JSON formatted string:
+
+A raw string:
+
+```java
+String createUserJson = "{\n" +
+        "   \"firstName\":\"Sergey\",\n" +
+        "   \"lastName\":\"Kargopolov\",\n" +
+        "   \"email\":\"test@test.com\",\n" +
+        "   \"password\":\"12345678\",\n" +
+        "   \"repeatPassword\":\"12345678\",\n" +
+        "}";
+```
+
+Or with `JSONObject`:
+
+```java
+JSONObject userDetailsRequestJson = new JSONObject();
+userDetailsRequestJson.put("firstName", "Sergey");
+userDetailsRequestJson.put("lastName", "Kargopolov");
+userDetailsRequestJson.put("email", "test@test.com");
+userDetailsRequestJson.put("password", "12345678");
+userDetailsRequestJson.put("repeatPassword", "12345678");
 ```
