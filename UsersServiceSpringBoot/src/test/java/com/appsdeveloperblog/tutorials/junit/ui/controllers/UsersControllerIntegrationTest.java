@@ -16,14 +16,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UsersControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    private String authorizationToken;
 
     @Test
     @Order(1)
@@ -97,12 +101,38 @@ public class UsersControllerIntegrationTest {
         // Act
         ResponseEntity response = testRestTemplate.postForEntity("/users/login", request, null);
 
+        authorizationToken = response.getHeaders().getValuesAsList(SecurityConstants.HEADER_STRING).get(0);
+
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode(),
                 "HTTP Status Code should be 200");
-        assertNotNull(response.getHeaders().getValuesAsList(SecurityConstants.HEADER_STRING).get(0),
-                "Response should contain Authorization header with JWT");
+        assertNotNull(authorizationToken, "Response should contain Authorization header with JWT");
         assertNotNull(response.getHeaders().getValuesAsList("UserId").get(0),
                 "Response should contain UserId header");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Get /users works")
+    void testGetUsers_whenValidJwtProvided_returnsUsers() {
+        // Arrange
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setBearerAuth(authorizationToken);
+
+        HttpEntity request = new HttpEntity(headers);
+
+        // Act
+        ResponseEntity<List<UserRest>> response = testRestTemplate.exchange("/users",
+                HttpMethod.GET,
+                request,
+                new ParameterizedTypeReference<List<UserRest>>() {
+                });
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode(),
+                "Http Status Code should be 200");
+        assertTrue(response.getBody().size() == 1,
+                "Should have exactly one user");
     }
 }
